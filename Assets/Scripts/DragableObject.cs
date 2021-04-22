@@ -4,8 +4,10 @@ public class DragableObject : MonoBehaviour
 
 {
     private Vector3 mOffset;
-
     private float mZCoord;
+
+    public event Action OnDragItem;
+    public event Action OnReleaseItem;
     
     void OnMouseDown()
     {
@@ -18,7 +20,7 @@ public class DragableObject : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.Log("lelele");
+        OnReleaseItem?.Invoke();
     }
 
     private Vector3 GetMouseAsWorldPoint()
@@ -39,7 +41,13 @@ public class DragableObject : MonoBehaviour
     void OnMouseDrag()
     {
         transform.position = GetMouseAsWorldPoint() + mOffset;
-
+        OnDragItem?.Invoke();
     }
+
+
+    public void ADD_EVENT_OnDragItem(Action callback) => OnDragItem += callback;
+    public void ADD_EVENT_OnReleaseItem(Action callback) => OnReleaseItem += callback;
+    public void REMOVE_EVENT_OnDragItem(Action callback) => OnDragItem -= callback;
+    public void REMOVE_EVENT_OnReleaseItem(Action callback) => OnReleaseItem -= callback;
 
 }
