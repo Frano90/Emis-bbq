@@ -6,12 +6,15 @@ public class DragableObject : MonoBehaviour
     private Vector3 mOffset;
     private float mZCoord;
 
+    
+    
     public event Action OnDragItem;
     public event Action OnReleaseItem;
     
     void OnMouseDown()
     {
         mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+        //mYCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).y;
         
         // Store offset = gameobject world pos - mouse world pos
 
@@ -29,6 +32,8 @@ public class DragableObject : MonoBehaviour
 
         Vector3 mousePoint = Input.mousePosition;
 
+        
+        
         // z coordinate of game object on screen
 
         mousePoint.z = mZCoord;
@@ -40,14 +45,14 @@ public class DragableObject : MonoBehaviour
 
     void OnMouseDrag()
     {
-        transform.position = GetMouseAsWorldPoint() + mOffset;
+        //transform.position = GetMouseAsWorldPoint() + mOffset;
         OnDragItem?.Invoke();
     }
 
 
-    public void ADD_EVENT_OnDragItem(Action callback) => OnDragItem += callback;
-    public void ADD_EVENT_OnReleaseItem(Action callback) => OnReleaseItem += callback;
-    public void REMOVE_EVENT_OnDragItem(Action callback) => OnDragItem -= callback;
+    public void AddEventOnDragItem(Action callback) => OnDragItem += callback;
+    public void AddEventOnReleaseItem(Action callback) => OnReleaseItem += callback;
+    public void RemoveEventOnDragItem(Action callback) => OnDragItem -= callback;
     public void REMOVE_EVENT_OnReleaseItem(Action callback) => OnReleaseItem -= callback;
 
 }

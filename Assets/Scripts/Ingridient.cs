@@ -6,20 +6,29 @@ public class Ingridient : MonoBehaviour
 {
     private DragableObject _dragableController;
 
-    [SerializeField] private Ingridient_RaycastPositioningChecker _raycastPositioningChecker;
+    [SerializeField] private IngridientPlacer _raycastPositioningChecker;
     // Start is called before the first frame update
     void Start()
     {
         _dragableController = GetComponent<DragableObject>();
-        _raycastPositioningChecker = new Ingridient_RaycastPositioningChecker(transform);
+        _raycastPositioningChecker = new IngridientPlacer(this, Camera.main);
         
         EventSubscription();
     }
 
     void EventSubscription()
     {
-        _dragableController.ADD_EVENT_OnDragItem(_raycastPositioningChecker.Check);
-        _dragableController.ADD_EVENT_OnReleaseItem(_raycastPositioningChecker.ReleaseItem);
+        _dragableController.AddEventOnDragItem(_raycastPositioningChecker.Test);
+        _dragableController.AddEventOnReleaseItem(_raycastPositioningChecker.ReleaseItem);
     }
-    
+
+    public void MoveTo(Vector3 newPos)
+    {
+        transform.position = newPos;
+    }
+
+    public void Delete()
+    {
+        Destroy(gameObject);
+    }
 }

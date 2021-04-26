@@ -22,9 +22,9 @@ public class ObjectReceiver : MonoBehaviour
         if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
     }
     
-    public void PlaceObjectOnReceiver(Transform obj)
+    public virtual void OnReceiveItem(Ingridient ingridient)
     {
         Debug.Log("voy y lo pongo");
-        obj.position = placeToPutObject.position;
+        if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
     }
 }
