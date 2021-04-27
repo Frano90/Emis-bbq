@@ -19,33 +19,7 @@ public class IngridientPlacer
         originalPos = ingridient.transform.position;
         parabolic = new ParabolicShooter(ingridient.transform);
     }
-    
-    public void Check()
-    {
-        Ray ray = new Ray(ingridient.transform.position, Vector3.down);
-        
-        
-        RaycastHit hit;
-
-        Physics.Raycast(ray, out hit);
-
-        var posiblePlace = hit.collider.GetComponent<ObjectReceiver>();
-
-        if (posiblePlace != null)
-        {
-            _currentObjectReceiver = posiblePlace;
-            posiblePlace.OnDragObjectHover();
-        }
-        else
-        {
-            if(_currentObjectReceiver != null) _currentObjectReceiver.OnExitDragObjectHover();
-            _currentObjectReceiver = null;
-        }
-        
-        Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabIngridient);
-    }
-
-    public void Test()
+    public void TryToPlaceObject()
     {
         Ray ray = _myCam.ScreenPointToRay(Input.mousePosition);
         
@@ -69,9 +43,8 @@ public class IngridientPlacer
                 _currentObjectReceiver = null;
             }    
         }
-        
-        Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabIngridient);
-        
+
+        ingridient.GrabItem();
     }
 
     public void ReleaseItem()
@@ -85,7 +58,6 @@ public class IngridientPlacer
         else
             ingridient.transform.position = originalPos;
         
-        
-        Main.instance.eventManager.TriggerEvent(GameEvent.OnReleaseIngridient);
+        ingridient.ReleaseItem();
     }
 }

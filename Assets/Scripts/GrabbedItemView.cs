@@ -3,34 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabbedItemView : MonoBehaviour
+[System.Serializable]
+public class GrabbedItemView
 {
     private MeshRenderer _meshRenderer;
     private Material originalMaterial;
     [SerializeField] private Material grabbedMaterial;
 
-    
-    
-    void Awake()
+
+
+    public GrabbedItemView(Ingridient myIngridient)
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        originalMaterial = _meshRenderer.material;
+        //_meshRenderer = myIngridient.GetComponent<MeshRenderer>();
+        //originalMaterial = _meshRenderer.material;
+
+        //grabbedMaterial = Resources.Load<Material>("GrabbedItem");
+        
+        myIngridient.OnGrabbedItem += EnableFeedback;
+        myIngridient.OnReleaseItem += DisableFeedback;
     }
 
-    private void Start()
+    void EnableFeedback()
     {
-        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabIngridient, OnGrabItem);
-        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleaseIngridient, OnReleaseItem);
-    }
-
-    void OnGrabItem()
-    {
-        _meshRenderer.material = grabbedMaterial;
+        //_meshRenderer.material = grabbedMaterial;
     }
     
-    void OnReleaseItem()
+    void DisableFeedback()
     {
-        _meshRenderer.material = originalMaterial;
+        //_meshRenderer.material = originalMaterial;
     }
     
 }

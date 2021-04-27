@@ -22,8 +22,8 @@ public class MouseView : MonoBehaviour
 
     private void Start()
     {
-        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabIngridient, GrabView);
-        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleaseIngridient, ReleaseView);
+        //Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabIngridient, GrabView);
+        //Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleaseIngridient, ReleaseView);
     }
 
     private void GrabView() {currenthand_Image.sprite = grabHand_image;}
@@ -31,11 +31,20 @@ public class MouseView : MonoBehaviour
     private void ReleaseView()
     {
         currenthand_Image.sprite = releaseHand_image;
-        currentItemGrabbed_Image.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            GrabView();
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            ReleaseView();
+        }
+        
         currenthand_Image.transform.position = Input.mousePosition;
     }
     
@@ -57,7 +66,7 @@ public class MouseView : MonoBehaviour
 
         }
         
-        Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabIngridient);
+        //Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabIngridient);
         
     }
 }

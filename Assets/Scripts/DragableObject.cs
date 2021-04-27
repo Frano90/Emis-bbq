@@ -5,8 +5,6 @@ public class DragableObject : MonoBehaviour
 {
     private Vector3 mOffset;
     private float mZCoord;
-
-    
     
     public event Action OnDragItem;
     public event Action OnReleaseItem;
