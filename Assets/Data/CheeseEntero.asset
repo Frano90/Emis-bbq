@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a687bf95a5d8cb24e807444bb2c72fbb, type: 3}
   m_Name: CheeseEntero
   m_EditorClassIdentifier: 
-  grabbedImage: {fileID: 0}
+  grabbedImage: {fileID: 21300000, guid: 8b7d3ab59ff94734ebc49e7477ddf33d, type: 3}
   grabbedMaterial: {fileID: 2100000, guid: b7373bd9a4fded74cbc7de13fc316dd5, type: 2}
   viewModel: {fileID: 2042705695753351074, guid: 51f7be8c1fda1db4e886759f912bd2ca,
     type: 3}
+  processTime: 5

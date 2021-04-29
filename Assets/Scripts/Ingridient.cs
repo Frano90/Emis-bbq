@@ -12,26 +12,53 @@ public class Ingridient : MonoBehaviour
 
     [SerializeField] private Transform modelView;
 
-    [SerializeField] private IngridientPlacer _raycastPositioningChecker;
+    [SerializeField] private IngridientProcessBar _processBar = new IngridientProcessBar();
+    [SerializeField] private IngridientPlacer _ingredientPlacer;
+    
+    
     public event Action OnGrabbedItem;
     public event Action OnReleaseItem;
+
+    public IngridientData CurrentIngridientData => _ingridientStates[_currentIngridientStateIndex];
     
     void Start()
     {
         _dragableController = GetComponent<DragableObject>();
-        _raycastPositioningChecker = new IngridientPlacer(this, Camera.main);
+        _ingredientPlacer = new IngridientPlacer(this, Camera.main);
 
         new GrabbedItemView(this);
         
-        _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
-        
         EventSubscription();
+        
+        _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
     }
 
     void EventSubscription()
     {
-        _dragableController.AddEventOnDragItem(_raycastPositioningChecker.TryToPlaceObject);
-        _dragableController.AddEventOnReleaseItem(_raycastPositioningChecker.ReleaseItem);
+        _dragableController.AddEventOnDragItem(_ingredientPlacer.TryToPlaceObject);
+        _dragableController.AddEventOnReleaseItem(_ingredientPlacer.ReleaseItem);
+
+        foreach (var state in _ingridientStates)
+        {
+            state.AddEventOnFinishProcessTime(Process);
+            state.AddEventOnRefreshElapsedProcessTime(_processBar.RefreshUI);
+        }
+    }
+
+    public void TryToPlaceObject()
+    {
+        _ingredientPlacer.TryToPlaceObject();
+    }
+
+    public void PlaceObject()
+    {
+        
+        _ingredientPlacer.ReleaseItem();
+    }
+
+    private void Update()
+    {
+        if(_ingridientStates[_currentIngridientStateIndex] != null) _ingridientStates[_currentIngridientStateIndex].Update();
     }
 
     public void MoveTo(Vector3 newPos)
@@ -56,9 +83,13 @@ public class Ingridient : MonoBehaviour
 
     public void Process()
     {
+        _ingridientStates[_currentIngridientStateIndex].RemoveEventOnFinishProcessTime(Process); //esto no le gusta al memi
+        _ingridientStates[_currentIngridientStateIndex].RemoveEventOnRefreshElapsedProcessTime(_processBar.RefreshUI); // esto tampoco
         _ingridientStates[_currentIngridientStateIndex].Exit(modelView);
-        if (_currentIngridientStateIndex + 1 > _ingridientStates.Length)
+        
+        if (_currentIngridientStateIndex + 1 >= _ingridientStates.Length)
         {
+            
             Delete();
             return;
         }

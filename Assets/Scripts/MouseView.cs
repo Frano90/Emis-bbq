@@ -12,24 +12,37 @@ public class MouseView : MonoBehaviour
     [SerializeField] private Image currenthand_Image;
 
     [SerializeField] private Image currentItemGrabbed_Image;
-    
-    
 
     private void Awake()
     {
         Cursor.visible = false;
+        currentItemGrabbed_Image.gameObject.SetActive(false);
     }
 
-    private void Start()
+    private void GrabView()
     {
-        //Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabIngridient, GrabView);
-        //Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleaseIngridient, ReleaseView);
-    }
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        RaycastHit hit;
 
-    private void GrabView() {currenthand_Image.sprite = grabHand_image;}
+        if (Physics.Raycast(ray, out hit, 1000f))
+        {
+            var item = hit.collider.GetComponent<IngredientRecipient>();
+
+            if (item != null)
+            {
+                currentItemGrabbed_Image.sprite = item.firstStateIngridientData.grabbedImage;
+                currentItemGrabbed_Image.gameObject.SetActive(true);
+            }
+        }
+        
+        currenthand_Image.sprite = grabHand_image;
+        GrabbedItemView();
+    }
 
     private void ReleaseView()
     {
+        currentItemGrabbed_Image.gameObject.SetActive(false);
         currenthand_Image.sprite = releaseHand_image;
     }
 
@@ -45,7 +58,7 @@ public class MouseView : MonoBehaviour
             ReleaseView();
         }
         
-        currenthand_Image.transform.position = Input.mousePosition;
+        currenthand_Image.transform.position = currentItemGrabbed_Image.transform.position = Input.mousePosition;
     }
     
     public void GrabbedItemView()
@@ -60,13 +73,10 @@ public class MouseView : MonoBehaviour
 
             if (item != null)
             {
+                currentItemGrabbed_Image.sprite = item.CurrentIngridientData.grabbedImage;
                 currentItemGrabbed_Image.gameObject.SetActive(true);
                 //Preguntar emi. Aca deberiamos saber que imagen poner segun el objeto
             }
-
         }
-        
-        //Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabIngridient);
-        
     }
 }

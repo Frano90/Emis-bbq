@@ -27,6 +27,6 @@ public class ObjectReceiver : MonoBehaviour
         Debug.Log("voy y lo pongo");
         if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
         
-        ingridient.Process();
+        //ingridient.Process();
     }
 }

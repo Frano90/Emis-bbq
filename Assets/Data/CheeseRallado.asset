@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a687bf95a5d8cb24e807444bb2c72fbb, type: 3}
   m_Name: CheeseRallado
   m_EditorClassIdentifier: 
-  grabbedImage: {fileID: 0}
+  grabbedImage: {fileID: 21300000, guid: 23df0c3082c233b4d83fbc9829af47f0, type: 3}
   grabbedMaterial: {fileID: 2100000, guid: c871a17f739c4624d902efe8b8167686, type: 2}
   viewModel: {fileID: 4087237241097341601, guid: 3fa1b98ba59ab324a9e7329e5f4049ef,
     type: 3}
+  processTime: 5
