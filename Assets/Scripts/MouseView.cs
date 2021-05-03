@@ -27,11 +27,11 @@ public class MouseView : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000f))
         {
-            var item = hit.collider.GetComponent<IngredientRecipient>();
+            var item = hit.collider.GetComponent<IngredientDispatcher>();
 
             if (item != null)
             {
-                currentItemGrabbed_Image.sprite = item.firstStateIngridientData.grabbedImage;
+                //currentItemGrabbed_Image.sprite = item.firstStateIngridientData.grabbedImage;
                 currentItemGrabbed_Image.gameObject.SetActive(true);
             }
         }
@@ -75,7 +75,6 @@ public class MouseView : MonoBehaviour
             {
                 currentItemGrabbed_Image.sprite = item.CurrentIngridientData.grabbedImage;
                 currentItemGrabbed_Image.gameObject.SetActive(true);
-                //Preguntar emi. Aca deberiamos saber que imagen poner segun el objeto
             }
         }
     }

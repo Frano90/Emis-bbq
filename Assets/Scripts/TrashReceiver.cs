@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrashReceiver : ObjectReceiver
+public class TrashReceiver : PickableReceiver
 {
-    public override void OnReceiveItem(Ingridient ingridient)
+    public override void OnReceiveIngredient(IPickable pickable)
     {
-        base.OnReceiveItem(ingridient);
+        base.OnReceiveIngredient(pickable);
 
-        ingridient.Delete();
+        pickable.Delete();
     }
 }

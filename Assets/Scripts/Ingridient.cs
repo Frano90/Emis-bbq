@@ -3,99 +3,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ingridient : MonoBehaviour
+public class Ingridient : MonoBehaviour, IPickable
 {
-    private DragableObject _dragableController;
-
     [SerializeField] private IngridientData[] _ingridientStates;
     private int _currentIngridientStateIndex = 0;
 
     [SerializeField] private Transform modelView;
 
-    [SerializeField] private IngridientProcessBar _processBar = new IngridientProcessBar();
-    [SerializeField] private IngridientPlacer _ingredientPlacer;
-    
-    
-    public event Action OnGrabbedItem;
-    public event Action OnReleaseItem;
+    [SerializeField]private GrabbedItemView _grabbedItemView;
 
+    private PickableReceiver _currentReceiver;
+    public event Action OnMoveToAnotherPlace;
     public IngridientData CurrentIngridientData => _ingridientStates[_currentIngridientStateIndex];
-    
+
     void Start()
     {
-        _dragableController = GetComponent<DragableObject>();
-        _ingredientPlacer = new IngridientPlacer(this, Camera.main);
+        _grabbedItemView = new GrabbedItemView(modelView);
 
-        new GrabbedItemView(this);
-        
-        EventSubscription();
-        
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
     }
 
-    void EventSubscription()
+    public PickableReceiver GetCurrentReceiver()
     {
-        _dragableController.AddEventOnDragItem(_ingredientPlacer.TryToPlaceObject);
-        _dragableController.AddEventOnReleaseItem(_ingredientPlacer.ReleaseItem);
-
-        foreach (var state in _ingridientStates)
-        {
-            state.AddEventOnFinishProcessTime(Process);
-            state.AddEventOnRefreshElapsedProcessTime(_processBar.RefreshUI);
-        }
-    }
-
-    public void TryToPlaceObject()
-    {
-        _ingredientPlacer.TryToPlaceObject();
-    }
-
-    public void PlaceObject()
-    {
-        
-        _ingredientPlacer.ReleaseItem();
-    }
-
-    private void Update()
-    {
-        if(_ingridientStates[_currentIngridientStateIndex] != null) _ingridientStates[_currentIngridientStateIndex].Update();
-    }
-
-    public void MoveTo(Vector3 newPos)
-    {
-        transform.position = newPos;
+        return _currentReceiver;
     }
 
     public void Delete()
     {
         Destroy(gameObject);
     }
-
-    public void GrabItem()
-    {
-        OnGrabbedItem?.Invoke();
-    }
-    
-    public void ReleaseItem()
-    {
-        OnReleaseItem?.Invoke();
-    }
-
     public void Process()
     {
-        _ingridientStates[_currentIngridientStateIndex].RemoveEventOnFinishProcessTime(Process); //esto no le gusta al memi
-        _ingridientStates[_currentIngridientStateIndex].RemoveEventOnRefreshElapsedProcessTime(_processBar.RefreshUI); // esto tampoco
         _ingridientStates[_currentIngridientStateIndex].Exit(modelView);
         
         if (_currentIngridientStateIndex + 1 >= _ingridientStates.Length)
         {
-            
             Delete();
             return;
         }
-
         _currentIngridientStateIndex++;
         
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
     }
+
+    public void PickUp()
+    {
+        _grabbedItemView.EnablePickUpFeedback();
+    }
+
+    public void Release()
+    {
+        _grabbedItemView.DisablePickUpFeedback();
+    }
+
+    public void MoveTo(Vector3 newPos, PickableReceiver receiver)
+    {
+        _currentReceiver = receiver;
+        transform.position = newPos;
+        OnMoveToAnotherPlace?.Invoke();
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public void AddPickUpListener(Action callback)
+    {
+        
+    }
+
+    public void AddReleaseListener(Action callback)
+    {
+        
+    }
+
+    public void RemovePickUpListener(Action callback)
+    {
+        
+    }
+
+    public void RemoveReleaseListener(Action callback)
+    {
+        
+    }
 }
+
+

@@ -8,6 +8,7 @@ public class DragableObject : MonoBehaviour
     
     public event Action OnDragItem;
     public event Action OnReleaseItem;
+    public event Action OnPickUpItem;
     
     void OnMouseDown()
     {
@@ -17,6 +18,9 @@ public class DragableObject : MonoBehaviour
         // Store offset = gameobject world pos - mouse world pos
 
         mOffset = gameObject.transform.position - GetMouseAsWorldPoint();
+        
+        
+        OnPickUpItem?.Invoke();
     }
 
     private void OnMouseUp()
@@ -52,5 +56,7 @@ public class DragableObject : MonoBehaviour
     public void AddEventOnReleaseItem(Action callback) => OnReleaseItem += callback;
     public void RemoveEventOnDragItem(Action callback) => OnDragItem -= callback;
     public void REMOVE_EVENT_OnReleaseItem(Action callback) => OnReleaseItem -= callback;
+    public void AddEventOnPickUpItem(Action callback) => OnPickUpItem += callback;
+    public void RemoveEventOnPickUpItem(Action callback) => OnPickUpItem -= callback;
 
 }

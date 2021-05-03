@@ -12,25 +12,22 @@ public class GrabbedItemView
 
 
 
-    public GrabbedItemView(Ingridient myIngridient)
-    {
-        //_meshRenderer = myIngridient.GetComponent<MeshRenderer>();
-        //originalMaterial = _meshRenderer.material;
+    public GrabbedItemView(Transform myModelView)
+    { 
+        _meshRenderer = myModelView.GetComponent<MeshRenderer>();
+        originalMaterial = _meshRenderer.material;
 
-        //grabbedMaterial = Resources.Load<Material>("GrabbedItem");
-        
-        myIngridient.OnGrabbedItem += EnableFeedback;
-        myIngridient.OnReleaseItem += DisableFeedback;
+        grabbedMaterial = Resources.Load<Material>("GrabbedItem");
     }
 
-    void EnableFeedback()
+    public void EnablePickUpFeedback()
     {
-        //_meshRenderer.material = grabbedMaterial;
+        _meshRenderer.material = grabbedMaterial;
     }
     
-    void DisableFeedback()
+    public void DisablePickUpFeedback()
     {
-        //_meshRenderer.material = originalMaterial;
+        _meshRenderer.material = originalMaterial;
     }
     
 }

@@ -29,22 +29,5 @@ public class IngridientData : ScriptableObject
         modelView.GetComponent<MeshRenderer>().material = viewModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
-    public void Update()
-    {
-        _count += Time.deltaTime;
 
-        if (_count >= processTime)
-        {
-            _count = 0;
-            OnFinishProcessTime?.Invoke();
-        }
-        
-        OnRefreshElapsedProcessTime?.Invoke(_count, processTime);
-    }
-    
-    public void AddEventOnFinishProcessTime(Action callback) => OnFinishProcessTime += callback;
-    public void RemoveEventOnFinishProcessTime(Action callback) => OnFinishProcessTime -= callback;
-    
-    public void AddEventOnRefreshElapsedProcessTime(Action<float, float> callback) => OnRefreshElapsedProcessTime += callback;
-    public void RemoveEventOnRefreshElapsedProcessTime(Action<float, float> callback) => OnRefreshElapsedProcessTime -= callback;
 }
