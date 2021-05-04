@@ -5,7 +5,7 @@ public interface IPickable
 {
     void PickUp();
     void Release();
-    void MoveTo(Vector3 newPos, PickableReceiver receiver);
+    void MoveTo(PickableReceiver receiver);
 
     PickableReceiver GetCurrentReceiver();
     void Delete();

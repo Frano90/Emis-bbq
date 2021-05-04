@@ -56,10 +56,10 @@ public class Ingridient : MonoBehaviour, IPickable
         _grabbedItemView.DisablePickUpFeedback();
     }
 
-    public void MoveTo(Vector3 newPos, PickableReceiver receiver)
+    public void MoveTo(PickableReceiver receiver)
     {
         _currentReceiver = receiver;
-        transform.position = newPos;
+        transform.position = receiver.PlaceToPutObject.position;
         OnMoveToAnotherPlace?.Invoke();
     }
 

@@ -33,10 +33,14 @@ public class PickableReceiver : MonoBehaviour
     
     public virtual void OnReceiveIngredient(IPickable pickable)
     {
-        _currentIngredient = pickable as Ingridient;
-        _currentIngredient.MoveTo(placeToPutObject.position, this);
+        if (pickable is Ingridient)
+        {
+            _currentIngredient = pickable as Ingridient;
+            _currentIngredient.MoveTo(this);
         
-        if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
+            if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
+        }
+        
     }
 
     private void Update()
@@ -62,7 +66,7 @@ public class PickableReceiver : MonoBehaviour
         processBar.fillAmount = _count / data.processTime;
     }
     
-    public void OnRemoveIngredient()
+    public void RemoveIngredient()
     {
         _count = 0;
         _currentIngredient = null;

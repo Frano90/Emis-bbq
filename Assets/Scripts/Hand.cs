@@ -46,13 +46,13 @@ public class Hand : MonoBehaviour
         }
     }
 
-    private void ReleasePickable()//Esto no le va a gustar al memi
+    private void ReleasePickable()
     {
         if( _currentPickable != null) _currentPickable.Release();
         
         if (_currentPickableReceiver != null)
         {
-            if(_currentPickable.GetCurrentReceiver() != null) _currentPickable.GetCurrentReceiver().OnRemoveIngredient();
+            if(_currentPickable.GetCurrentReceiver() != null) _currentPickable.GetCurrentReceiver().RemoveIngredient();
             _currentPickableReceiver.OnReceiveIngredient(_currentPickable);
         }
 
