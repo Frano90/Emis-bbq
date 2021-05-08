@@ -8,13 +8,13 @@ public class PickableReceiver : MonoBehaviour
 {
 
     [SerializeField] private Image processBar; 
-    [SerializeField] private GameObject processBarCanvas; 
+    [SerializeField] private GameObject uiPanel; 
     
-    [SerializeField] private ParticleSystem onHoverParticles_FB;
+    [SerializeField] protected ParticleSystem onHoverParticles_FB;
     
     [SerializeField] private Transform placeToPutObject;
 
-    private Ingridient _currentIngredient;
+    private Ingredient _currentIngredient;
 
     private float _count;
 
@@ -33,9 +33,9 @@ public class PickableReceiver : MonoBehaviour
     
     public virtual void OnReceiveIngredient(IPickable pickable)
     {
-        if (pickable is Ingridient)
+        if (pickable is Ingredient)
         {
-            _currentIngredient = pickable as Ingridient;
+            _currentIngredient = pickable as Ingredient;
             _currentIngredient.MoveTo(this);
         
             if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
@@ -43,16 +43,16 @@ public class PickableReceiver : MonoBehaviour
         
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(_currentIngredient != null) ProcessIngredient();
         
-        processBarCanvas.SetActive(_currentIngredient != null);
+        uiPanel.SetActive(_currentIngredient != null);
     }
 
     void ProcessIngredient()
     {
-        var data = _currentIngredient.CurrentIngridientData;
+        var data = _currentIngredient.CurrentIngredientData;
         
         
         _count += Time.deltaTime;

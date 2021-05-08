@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Ingridient", menuName = "Ingridient/New")]
-public class IngridientData : ScriptableObject
+public class IngredientData : ScriptableObject
 {
     public Sprite grabbedImage;
     public Material grabbedMaterial;

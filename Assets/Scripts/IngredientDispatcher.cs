@@ -6,8 +6,8 @@ using UnityEngine;
 public class IngredientDispatcher : MonoBehaviour
 {
 
-
-    [SerializeField] private Ingridient currentIngredient;
+    [SerializeField] private string ingredientName;
+    private Ingredient currentIngredient;
     
     private PickableReceiver _currentPickableReceiver;
     
@@ -18,7 +18,7 @@ public class IngredientDispatcher : MonoBehaviour
 
     private void CreateNewIngredient()
     {
-       Ingridient newIngredient = Resources.Load<Ingridient>("IngredienteQueso");
+       Ingredient newIngredient = Resources.Load<Ingredient>(ingredientName);
        currentIngredient = Instantiate(newIngredient, transform.position, Quaternion.identity, transform);
        currentIngredient.OnMoveToAnotherPlace += DispatchIngredient;
     }

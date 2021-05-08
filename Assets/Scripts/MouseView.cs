@@ -69,11 +69,11 @@ public class MouseView : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000f))
         {
-            var item = hit.collider.GetComponent<Ingridient>();
+            var item = hit.collider.GetComponent<Ingredient>();
 
             if (item != null)
             {
-                currentItemGrabbed_Image.sprite = item.CurrentIngridientData.grabbedImage;
+                currentItemGrabbed_Image.sprite = item.CurrentIngredientData.grabbedImage;
                 currentItemGrabbed_Image.gameObject.SetActive(true);
             }
         }

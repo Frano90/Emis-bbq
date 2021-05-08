@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687bf95a5d8cb24e807444bb2c72fbb, type: 3}
+  m_Name: BurgerRaw
+  m_EditorClassIdentifier: 
+  grabbedImage: {fileID: 21300000, guid: 5c1a7d772c559f0489d3eef24becb9a6, type: 3}
+  grabbedMaterial: {fileID: 2100000, guid: c871a17f739c4624d902efe8b8167686, type: 2}
+  viewModel: {fileID: 4087237241097341601, guid: 464c219566c177041a9dfc33e7f29119,
+    type: 3}
+  processTime: 7

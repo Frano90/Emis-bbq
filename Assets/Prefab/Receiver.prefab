@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 5324940067591848428}
   - component: {fileID: 5324940067591848429}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: uiPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 5324940067936573630}
   - component: {fileID: 5324940067936573631}
   m_Layer: 0
-  m_Name: Receiver (2)
+  m_Name: Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   processBar: {fileID: 5324940068129740167}
-  processBarCanvas: {fileID: 5324940067591848431}
+  uiPanel: {fileID: 5324940067591848431}
   onHoverParticles_FB: {fileID: 5324940067943425194}
   placeToPutObject: {fileID: 5324940067975370936}
 --- !u!1 &5324940067943425195

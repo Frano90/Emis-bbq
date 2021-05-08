@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ingridient : MonoBehaviour, IPickable
+public class Ingredient : MonoBehaviour, IPickable
 {
-    [SerializeField] private IngridientData[] _ingridientStates;
+    [SerializeField] private IngredientData[] _ingridientStates;
     private int _currentIngridientStateIndex = 0;
 
     [SerializeField] private Transform modelView;
@@ -14,7 +14,7 @@ public class Ingridient : MonoBehaviour, IPickable
 
     private PickableReceiver _currentReceiver;
     public event Action OnMoveToAnotherPlace;
-    public IngridientData CurrentIngridientData => _ingridientStates[_currentIngridientStateIndex];
+    public IngredientData CurrentIngredientData => _ingridientStates[_currentIngridientStateIndex];
 
     void Start()
     {
@@ -58,9 +58,13 @@ public class Ingridient : MonoBehaviour, IPickable
 
     public void MoveTo(PickableReceiver receiver)
     {
-        _currentReceiver = receiver;
-        transform.position = receiver.PlaceToPutObject.position;
         OnMoveToAnotherPlace?.Invoke();
+        
+        _currentReceiver = receiver;
+        
+        if (receiver == null) return;
+        transform.position = receiver.PlaceToPutObject.position;
+        
     }
 
     public Vector3 GetPosition()
