@@ -10,12 +10,20 @@ public class Client : PickableReceiver
     [SerializeField] private Recipe[] recipes;
     private Recipe _currentRecipe;
     [SerializeField] OrderView orderView;
+    
 
-    private void Start()
+    public event Action<bool, Client> OnReceiveOrder;
+
+    private void Awake()
+    {
+        orderView = FindObjectOfType<OrderView>();
+    }
+
+    public void Init()
     {
         Order();
     }
-
+    
     public void Order()
     {
         int rgn = Random.Range(0, recipes.Length);
@@ -42,6 +50,7 @@ public class Client : PickableReceiver
             {
                 Debug.Log("MAL PEDIDO");
                 pickable.Delete();
+                OnReceiveOrder?.Invoke(false, this);
                 return;
             }
             
@@ -50,12 +59,15 @@ public class Client : PickableReceiver
                 if (!_currentRecipe.ingredients[i].Equals(auxIngredientList[i]))
                 {
                     Debug.Log("NO ERA MI PEDIDO");
+                    OnReceiveOrder?.Invoke(false, this);
                     return;
                 }
             }
 
-            Debug.Log("ES MI PEDIDO");
             
+            OnReceiveOrder?.Invoke(true, this);
+            
+            Debug.Log("ES MI PEDIDO");
         }
     }
 

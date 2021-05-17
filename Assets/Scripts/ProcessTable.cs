@@ -8,7 +8,7 @@ public class ProcessTable : PickableReceiver
     {
         if (pickable is IProcesable)
         {
-            //_currentIngredient = pickable as Ingredient;
+            _currentIngredient = pickable as Ingredient;
             _currentIngredient.MoveTo(this);
         
             
