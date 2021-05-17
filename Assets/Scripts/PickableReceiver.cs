@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PickableReceiver : MonoBehaviour
 {
 
@@ -14,7 +15,7 @@ public class PickableReceiver : MonoBehaviour
     
     [SerializeField] private Transform placeToPutObject;
 
-    private Ingredient _currentIngredient;
+    protected Ingredient _currentIngredient;
 
     private float _count;
 
@@ -33,14 +34,7 @@ public class PickableReceiver : MonoBehaviour
     
     public virtual void OnReceiveIngredient(IPickable pickable)
     {
-        if (pickable is Ingredient)
-        {
-            _currentIngredient = pickable as Ingredient;
-            _currentIngredient.MoveTo(this);
-        
-            if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
-        }
-        
+
     }
 
     protected virtual void Update()

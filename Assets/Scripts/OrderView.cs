@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class OrderView : MonoBehaviour
 {
-    private List<GameObject> _currentRecipe = new List<GameObject>();
+    [SerializeField] private List<GameObject> _currentRecipe = new List<GameObject>();
     
     public void UpdateRecipe(Recipe recipe)
     {
@@ -27,8 +27,11 @@ public class OrderView : MonoBehaviour
 
     public void CleanRecipe()
     {
+        Debug.Log(_currentRecipe.Count);
+        
         for (int i = 0; i < _currentRecipe.Count; i++)
         {
+            Debug.Log("entro aca?");
             Destroy(_currentRecipe[i].gameObject);
         }
         

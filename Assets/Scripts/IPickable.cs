@@ -11,8 +11,6 @@ public interface IPickable
     void Delete();
 
     Vector3 GetPosition();
-    void AddPickUpListener(Action callback);
-    void AddReleaseListener(Action callback);
-    void RemovePickUpListener(Action callback);
-    void RemoveReleaseListener(Action callback);
+
+    Sprite GetGrabImage();
 }

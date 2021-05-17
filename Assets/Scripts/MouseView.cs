@@ -69,13 +69,29 @@ public class MouseView : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000f))
         {
-            var item = hit.collider.GetComponent<Ingredient>();
+            var item = GetPickableFromCollider(hit.collider);
 
             if (item != null)
             {
-                currentItemGrabbed_Image.sprite = item.CurrentIngredientData.grabbedImage;
+                currentItemGrabbed_Image.sprite = item.GetGrabImage();
                 currentItemGrabbed_Image.gameObject.SetActive(true);
             }
         }
     }
+    
+    #region AuxMethods
+
+    IPickable GetPickableFromCollider(Collider col)
+    {
+        foreach (var component in col.GetComponents<MonoBehaviour>())
+        {
+            if (component is IPickable)
+            {
+                return component as IPickable;
+            }
+        }
+        return null;
+    }
+
+    #endregion
 }

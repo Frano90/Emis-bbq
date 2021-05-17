@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ingredient : MonoBehaviour, IPickable
+public class Ingredient : MonoBehaviour, IPickable, IProcesable
 {
     [SerializeField] private IngredientData[] _ingridientStates;
     private int _currentIngridientStateIndex = 0;
@@ -72,24 +72,9 @@ public class Ingredient : MonoBehaviour, IPickable
         return transform.position;
     }
 
-    public void AddPickUpListener(Action callback)
+    public Sprite GetGrabImage()
     {
-        
-    }
-
-    public void AddReleaseListener(Action callback)
-    {
-        
-    }
-
-    public void RemovePickUpListener(Action callback)
-    {
-        
-    }
-
-    public void RemoveReleaseListener(Action callback)
-    {
-        
+        return CurrentIngredientData.grabbedImage;
     }
 }
 

@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbe64aa701c1b14790abbad27ae2a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ingridientStates:
-  - {fileID: 11400000, guid: 61cc8a72c2965aa478b8d11ad7fb7ffa, type: 2}
+  _currentRecipe: []
   modelView: {fileID: 420320155339378194}
   _grabbedItemView:
     grabbedMaterial: {fileID: 0}
+  grabImage: {fileID: 21300000, guid: dfd312b2c9b51074198ea5eafb78d35d, type: 3}
