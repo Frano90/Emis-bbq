@@ -3,35 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ingredient : MonoBehaviour, IPickable, IProcesable
+public class Ingredient : KitchenItem, IProcesable
 {
     [SerializeField] private IngredientData[] _ingridientStates;
     private int _currentIngridientStateIndex = 0;
-
-    [SerializeField] private Transform modelView;
-
-    [SerializeField]private GrabbedItemView _grabbedItemView;
-
-    private PickableReceiver _currentReceiver;
-    public event Action OnMoveToAnotherPlace;
+    
     public IngredientData CurrentIngredientData => _ingridientStates[_currentIngridientStateIndex];
 
-    void Start()
+    protected override void Start()
     {
-        _grabbedItemView = new GrabbedItemView(modelView);
-
+        base.Start();
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
     }
-
-    public PickableReceiver GetCurrentReceiver()
-    {
-        return _currentReceiver;
-    }
-
-    public void Delete()
-    {
-        Destroy(gameObject);
-    }
+    
     public void Process()
     {
         _ingridientStates[_currentIngridientStateIndex].Exit(modelView);
@@ -45,34 +29,8 @@ public class Ingredient : MonoBehaviour, IPickable, IProcesable
         
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
     }
-
-    public void PickUp()
-    {
-        _grabbedItemView.EnablePickUpFeedback();
-    }
-
-    public void Release()
-    {
-        _grabbedItemView.DisablePickUpFeedback();
-    }
-
-    public void MoveTo(PickableReceiver receiver)
-    {
-        OnMoveToAnotherPlace?.Invoke();
-        
-        _currentReceiver = receiver;
-        
-        if (receiver == null) return;
-        transform.position = receiver.PlaceToPutObject.position;
-        
-    }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
-    public Sprite GetGrabImage()
+    
+    public override Sprite GetGrabImage()
     {
         return CurrentIngredientData.grabbedImage;
     }

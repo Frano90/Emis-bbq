@@ -10,33 +10,30 @@ public class Plato : PickableReceiver
     [SerializeField] private OrderView orderViewUI;
     public override void OnReceiveIngredient(IPickable pickable)
     {
-        if (pickable is Ingredient)
+        if (!(pickable is Ingredient)) return;
+
+        Ingredient ingredient =  pickable as Ingredient;
+        
+        if (!_currentRecipe.Any())
         {
-            Ingredient ingredient =  pickable as Ingredient;
+            PreparedDish newDish = Resources.Load<PreparedDish>("PreparedDish");
+            _currentPreparedDish = Instantiate<PreparedDish>(newDish);
             
-            if (!_currentRecipe.Any())
-            {
-                PreparedDish newDish = Resources.Load<PreparedDish>("PreparedDish");
-                _currentPreparedDish = Instantiate<PreparedDish>(newDish);
-                
-                
-                _currentPreparedDish.MoveTo(this);
+            
+            _currentPreparedDish.MoveTo(this);
 
-                _currentPreparedDish.OnMoveToAnotherPlace += ClearDish;
-            }
-            
-            _currentPreparedDish.AddIngredient(ingredient.CurrentIngredientData);
-            
-            if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
-            ingredient.MoveTo(null);
-            orderViewUI.SetIngredientImage(ingredient.CurrentIngredientData.grabbedImage);
-        
-            _currentRecipe.Add(ingredient.CurrentIngredientData);
-            
-            pickable.Delete();
+            _currentPreparedDish.OnMoveToAnotherPlace += ClearDish;
         }
-
         
+        _currentPreparedDish.AddIngredient(ingredient.CurrentIngredientData);
+        
+        if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
+        ingredient.MoveTo(null);
+        orderViewUI.SetIngredientImage(ingredient.CurrentIngredientData.grabbedImage);
+    
+        _currentRecipe.Add(ingredient.CurrentIngredientData);
+        
+        pickable.Delete();
     }
 
     void ClearDish()

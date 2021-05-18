@@ -40,6 +40,7 @@ public class ClientManager : MonoBehaviour
 
     void NextCustomer()
     {
+        //esta version hace que el cliente recien atendido sea quien le dice al siguiente que tiene que avanzar
         Client currentClient = clientesDelDia.Dequeue();
 
         foreach (var pos in clientOrderPositions)
