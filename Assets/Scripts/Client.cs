@@ -10,8 +10,10 @@ public class Client : PickableReceiver
     [SerializeField] private Recipe[] recipes;
     private Recipe _currentRecipe;
     [SerializeField] OrderView orderView;
-    
 
+    public int MyWindow { get; set; }
+    
+    
     public event Action<bool, Client> OnReceiveOrder;
 
     private void Awake()
@@ -34,42 +36,54 @@ public class Client : PickableReceiver
 
     public override void OnReceiveIngredient(IPickable pickable)
     {
+        if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
         
+        if (!(pickable is IEntregable)) return;
         
-        if (pickable is IEntregable)
-        {
-            if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
-            pickable.MoveTo(this);
-            pickable.Delete();
-            
-            IEntregable entregable = pickable as IEntregable;
-            //PreparedDish preparedDish = pickable as PreparedDish;
-            List<IngredientData> auxIngredientList = entregable.GetIngredientsInOrder();
+        pickable.MoveTo(this);
+        pickable.Delete();
+        
+        IEntregable entregable = pickable as IEntregable;
+        List<IngredientData> auxIngredientList = entregable.GetIngredientsInOrder();
 
-            if (_currentRecipe.ingredients.Length != entregable.GetIngredientsInOrder().Count)
+        //Check si tiene la misma cantidad de ingredientes de lo que pidio
+        if (_currentRecipe.ingredients.Length != entregable.GetIngredientsInOrder().Count)
+        {
+            BadOrder(pickable);
+            return;
+        }
+        
+        for (int i = 0; i < auxIngredientList.Count; i++)
+        {
+            if (!_currentRecipe.ingredients[i].Equals(auxIngredientList[i]))
             {
-                Debug.Log("MAL PEDIDO");
-                pickable.Delete();
-                OnReceiveOrder?.Invoke(false, this);
+                BadOrder(pickable);
                 return;
             }
-            
-            for (int i = 0; i < auxIngredientList.Count; i++)
-            {
-                if (!_currentRecipe.ingredients[i].Equals(auxIngredientList[i]))
-                {
-                    Debug.Log("NO ERA MI PEDIDO");
-                    OnReceiveOrder?.Invoke(false, this);
-                    return;
-                }
-            }
-
-            
-            OnReceiveOrder?.Invoke(true, this);
-            
-            Debug.Log("ES MI PEDIDO");
         }
+
+        
+        GoodOrder();
+        
+        
+        
     }
 
-    protected override void Update(){ }
+    void BadOrder(IPickable pickable)
+    {
+        Debug.Log("MAL PEDIDO");
+        pickable.Delete();
+        OnReceiveOrder?.Invoke(false, this);
+        
+        Destroy(gameObject);
+    }
+
+    void GoodOrder()
+    {
+        OnReceiveOrder?.Invoke(true, this);
+        
+        Debug.Log("ES MI PEDIDO");
+        
+        Destroy(gameObject);
+    }
 }

@@ -9,7 +9,7 @@ public class KitchenItem : MonoBehaviour, IPickable
     public event Action OnMoveToAnotherPlace;
     
     [SerializeField] protected Transform modelView;
-
+    [SerializeField] protected Sprite grabImage;
     [SerializeField]private GrabbedItemView _grabbedItemView;
 
 
@@ -55,6 +55,6 @@ public class KitchenItem : MonoBehaviour, IPickable
 
     public virtual Sprite GetGrabImage()
     {
-        throw new System.NotImplementedException();
+        return grabImage;
     }
 }

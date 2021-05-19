@@ -1,6 +1,8 @@
 ﻿public enum GameEvent
 {
     OnGrabIngridient,
-    OnReleaseIngridient
+    OnReleaseIngridient,
+    ClientDonePurchase,
+    NoMoreCustomers
 }
 

@@ -7,8 +7,6 @@ public class PreparedDish : KitchenItem, IEntregable
 {
     [SerializeField] private List<IngredientData> _currentRecipe = new List<IngredientData>();
 
-    [SerializeField] private Sprite grabImage;
-    
     public void AddIngredient(IngredientData iData)
     {
         _currentRecipe.Add(iData);
@@ -19,10 +17,5 @@ public class PreparedDish : KitchenItem, IEntregable
     public void Entregar()
     {
         
-    }
-
-    public override Sprite GetGrabImage()
-    {
-        return grabImage;
     }
 }

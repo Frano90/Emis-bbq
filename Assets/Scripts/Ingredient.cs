@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ingredient : KitchenItem, IProcesable
+public class Ingredient : KitchenItem
 {
     [SerializeField] private IngredientData[] _ingridientStates;
     private int _currentIngridientStateIndex = 0;
@@ -14,6 +14,7 @@ public class Ingredient : KitchenItem, IProcesable
     {
         base.Start();
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
+        grabImage = _ingridientStates[_currentIngridientStateIndex].grabbedImage;
     }
     
     public void Process()
@@ -27,12 +28,8 @@ public class Ingredient : KitchenItem, IProcesable
         }
         _currentIngridientStateIndex++;
         
+        grabImage = _ingridientStates[_currentIngridientStateIndex].grabbedImage;
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
-    }
-    
-    public override Sprite GetGrabImage()
-    {
-        return CurrentIngredientData.grabbedImage;
     }
 }
 

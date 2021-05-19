@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420320155533541430}
   - component: {fileID: 420320155533541387}
-  - component: {fileID: 420320155533541431}
+  - component: {fileID: 1017946237680282581}
   m_Layer: 0
   m_Name: IngredienteBurger
   m_TagString: Untagged
@@ -125,7 +125,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &420320155533541431
+--- !u!114 &1017946237680282581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,12 +134,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 420320155533541385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a142f094810da74f8ba670172fc2dd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 1405ad10d597dec4b9616f16fce37faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelView: {fileID: 420320155339378194}
+  grabImage: {fileID: 0}
+  _grabbedItemView:
+    grabbedMaterial: {fileID: 0}
   _ingridientStates:
   - {fileID: 11400000, guid: 1e73ccd1013e92d4f8662c88aa37e74d, type: 2}
   - {fileID: 11400000, guid: bf2cca506a76cad42a50aba582a759cb, type: 2}
-  modelView: {fileID: 420320155339378194}
-  _grabbedItemView:
-    grabbedMaterial: {fileID: 0}

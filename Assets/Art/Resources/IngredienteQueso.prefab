@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420320155533541430}
   - component: {fileID: 420320155533541387}
-  - component: {fileID: 420320155533541431}
+  - component: {fileID: 4531268553113935100}
   m_Layer: 0
   m_Name: IngredienteQueso
   m_TagString: Untagged
@@ -125,7 +125,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &420320155533541431
+--- !u!114 &4531268553113935100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,13 +134,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 420320155533541385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a142f094810da74f8ba670172fc2dd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0191d873d441d104b93f1951d284d9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelView: {fileID: 420320155339378194}
+  grabImage: {fileID: 0}
+  _grabbedItemView:
+    grabbedMaterial: {fileID: 0}
   _ingridientStates:
   - {fileID: 11400000, guid: 655154ffb0c1d1248968f8b6ebc47611, type: 2}
   - {fileID: 11400000, guid: 40b17b75d13dfc14b92d39feb842e1ad, type: 2}
   - {fileID: 11400000, guid: 46952244d3629674ebfa31afa94c95fe, type: 2}
-  modelView: {fileID: 420320155339378194}
-  _grabbedItemView:
-    grabbedMaterial: {fileID: 0}
