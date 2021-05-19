@@ -11,21 +11,28 @@ public class Client : PickableReceiver
     private Recipe _currentRecipe;
     [SerializeField] OrderView orderView;
 
-    public int MyWindow { get; set; }
-    
-    
-    public event Action<bool, Client> OnReceiveOrder;
+    private float elapsedTimeOrdering = 0;
+    [SerializeField]private float totalOrderTime;
 
-    private void Awake()
-    {
-        orderView = FindObjectOfType<OrderView>();
-    }
+    public int MyWindow { get; set; }
+    public event Action<bool, Client> OnReceiveOrder;
 
     public void Init()
     {
         Order();
+
+        elapsedTimeOrdering = totalOrderTime;
     }
-    
+
+    private void Update()
+    {
+        if(elapsedTimeOrdering < 0) return;
+        
+        elapsedTimeOrdering -= Time.deltaTime;
+        
+        orderView.RefreshClockView(elapsedTimeOrdering, totalOrderTime);
+    }
+
     public void Order()
     {
         int rgn = Random.Range(0, recipes.Length);
@@ -61,11 +68,8 @@ public class Client : PickableReceiver
                 return;
             }
         }
-
         
         GoodOrder();
-        
-        
         
     }
 

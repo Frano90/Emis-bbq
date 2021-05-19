@@ -39,6 +39,7 @@ public class ClientWindow : MonoBehaviour
             if(clientOrderPositions[i].isOcupied) continue;
 
             nextCustomer.transform.position = clientOrderPositions[i].transform.position;
+            nextCustomer.transform.rotation = clientOrderPositions[i].transform.rotation;
             clientOrderPositions[i].isOcupied = true;
             nextCustomer.MyWindow = i;
             nextCustomer.OnReceiveOrder += ClearWindow;

@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class ProcessTable : ItemProcessor
 {
-    //private float _count;
     public override void OnReceiveIngredient(IPickable pickable)
     {
         if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
 
+        if(currentKitchenItemHolding != null) return;
+        
         if (!(pickable is ICortable)) return;
         
         pickable.MoveTo(this);

@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class ItemProcessor : PickableReceiver, IKitchenItemProcessor
 {
-    private float _count;  
-    
-    public override void OnReceiveIngredient(IPickable pickable)
-    {
-        if (!(pickable is IGrillable)) return;
-      
-        pickable.MoveTo(this);
-        currentKitchenItemHolding = pickable as Ingredient;
-    }
+    private float _count;
 
     private void Update()
     {
-        if(currentKitchenItemHolding != null) ProcessKitchenItem();
+        if (currentKitchenItemHolding != null)
+        {
+            ProcessKitchenItem();
+        }
+        else
+        {
+            _count = 0;
+        }
         
         uiPanel.SetActive(currentKitchenItemHolding != null);
     }

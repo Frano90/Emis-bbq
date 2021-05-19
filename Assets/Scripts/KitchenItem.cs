@@ -45,6 +45,7 @@ public class KitchenItem : MonoBehaviour, IPickable
 
     public void Delete()
     {
+        _currentReceiver.RemovePickable();
         Destroy(gameObject);
     }
 

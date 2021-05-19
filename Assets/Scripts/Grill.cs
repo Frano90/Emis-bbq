@@ -8,6 +8,8 @@ public class Grill : ItemProcessor
     {
         if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
 
+        if(currentKitchenItemHolding != null) return;
+        
         if (!(pickable is IGrillable)) return;
         
         pickable.MoveTo(this);

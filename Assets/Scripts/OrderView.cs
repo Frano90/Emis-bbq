@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class OrderView : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _currentRecipe = new List<GameObject>();
-    
+
+    [SerializeField] private Image clockView;
     public void UpdateRecipe(Recipe recipe)
     {
         CleanRecipe();
@@ -13,6 +14,21 @@ public class OrderView : MonoBehaviour
         foreach (IngredientData ingredient in recipe.ingredients)
         {
             SetIngredientImage(ingredient.grabbedImage);
+        }
+    }
+
+    public void RefreshClockView(float currentTime, float maxTime)
+    {
+        float percent = currentTime / maxTime;
+        clockView.fillAmount = percent;
+
+        if (percent < .3f)
+        {
+            clockView.color = Color.red;
+        }
+        else if(percent <= .6f)
+        {
+            clockView.color = Color.yellow;
         }
     }
 

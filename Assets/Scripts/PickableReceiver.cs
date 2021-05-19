@@ -15,7 +15,7 @@ public class PickableReceiver : MonoBehaviour
     
     [SerializeField] private Transform placeToPutObject;
 
-    protected IPickable currentKitchenItemHolding;
+    [SerializeField]protected IPickable currentKitchenItemHolding;
 
     private float _count;
     public Transform PlaceToPutObject => placeToPutObject;
