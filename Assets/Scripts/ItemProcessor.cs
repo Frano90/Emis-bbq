@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ItemProcessor : PickableReceiver, IKitchenItemProcessor
 {
-    private float _count;
-
     private void Update()
     {
         if (currentKitchenItemHolding != null)

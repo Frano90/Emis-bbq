@@ -87,7 +87,13 @@ public class Client : PickableReceiver
         OnReceiveOrder?.Invoke(true, this);
         
         Debug.Log("ES MI PEDIDO");
-        
+
+        ComputeScore();
         Destroy(gameObject);
+    }
+
+    private void ComputeScore()
+    {
+        //Como hacemos esto?
     }
 }

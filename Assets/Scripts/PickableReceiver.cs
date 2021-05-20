@@ -17,7 +17,7 @@ public class PickableReceiver : MonoBehaviour
 
     [SerializeField]protected IPickable currentKitchenItemHolding;
 
-    private float _count;
+    protected float _count;
     public Transform PlaceToPutObject => placeToPutObject;
     public void OnDragObjectHover() {if(!onHoverParticles_FB.isPlaying) onHoverParticles_FB.Play();}
 
