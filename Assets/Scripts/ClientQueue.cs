@@ -1,23 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ClientQueue
+public class ClientQueue : MonoBehaviour
 {
     [SerializeField] private int clientInLevel;
 
     [SerializeField] private Queue<Client> clientesDelDia = new Queue<Client>();
 
 
-    private ClientWindow windows;
-
-
-     public void Init(ClientWindow window, int clientInLevel)
+    private void Start()
     {
-        windows = window;
-        this.clientInLevel = clientInLevel;
-        CreateClientPool();
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.StartNewDay, CreateClientPool);
     }
 
     void CreateClientPool()
@@ -25,10 +21,9 @@ public class ClientQueue
         for (int i = 0; i < clientInLevel; i++)
         {
             var prefab = Resources.Load<Client>("Client");
-            Client newClient = GameObject.Instantiate<Client>(prefab, windows.transform);
+            Client newClient = GameObject.Instantiate<Client>(prefab, transform);
             newClient.gameObject.SetActive(false);
-            //newClient.OnReceiveOrder += RecieveOrder;
-            
+
             clientesDelDia.Enqueue(newClient);
         }
     }

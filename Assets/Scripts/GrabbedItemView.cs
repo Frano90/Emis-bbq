@@ -29,5 +29,10 @@ public class GrabbedItemView
     {
         _meshRenderer.material = originalMaterial;
     }
+
+    public void UpdateOriginalMaterial()
+    {
+        originalMaterial = _meshRenderer.material;
+    }
     
 }

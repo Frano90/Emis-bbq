@@ -43,11 +43,8 @@ public class OrderView : MonoBehaviour
 
     public void CleanRecipe()
     {
-        Debug.Log(_currentRecipe.Count);
-        
         for (int i = 0; i < _currentRecipe.Count; i++)
         {
-            Debug.Log("entro aca?");
             Destroy(_currentRecipe[i].gameObject);
         }
         

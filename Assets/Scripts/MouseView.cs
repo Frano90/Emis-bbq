@@ -15,29 +15,24 @@ public class MouseView : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
         currentItemGrabbed_Image.gameObject.SetActive(false);
     }
 
-    private void GrabView()
+    private void Start()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        RaycastHit hit;
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.StartNewDay, LockCursor);
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.FinishDay, UnlockCursor);
+    }
 
-        if (Physics.Raycast(ray, out hit, 1000f))
-        {
-            var item = hit.collider.GetComponent<IngredientDispatcher>();
+    void LockCursor()
+    {
+        Cursor.visible = false;
+    }
 
-            if (item != null)
-            {
-                //currentItemGrabbed_Image.sprite = item.firstStateIngridientData.grabbedImage;
-                currentItemGrabbed_Image.gameObject.SetActive(true);
-            }
-        }
-        
-        currenthand_Image.sprite = grabHand_image;
-        GrabbedItemView();
+    private void UnlockCursor()
+    {
+        Cursor.visible = true;
     }
 
     private void ReleaseView()
@@ -50,7 +45,7 @@ public class MouseView : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            GrabView();
+            GrabbedItemView();
         }
         
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -63,6 +58,8 @@ public class MouseView : MonoBehaviour
     
     public void GrabbedItemView()
     {
+        currenthand_Image.sprite = grabHand_image;
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
         RaycastHit hit;

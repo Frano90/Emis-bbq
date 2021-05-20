@@ -10,7 +10,7 @@ public class KitchenItem : MonoBehaviour, IPickable
     
     [SerializeField] protected Transform modelView;
     [SerializeField] protected Sprite grabImage;
-    [SerializeField]private GrabbedItemView _grabbedItemView;
+    [SerializeField] protected GrabbedItemView _grabbedItemView;
 
 
     protected virtual void Start()
@@ -45,7 +45,7 @@ public class KitchenItem : MonoBehaviour, IPickable
 
     public void Delete()
     {
-        _currentReceiver.RemovePickable();
+        if(_currentReceiver != null) _currentReceiver.RemovePickable();
         Destroy(gameObject);
     }
 
@@ -54,7 +54,7 @@ public class KitchenItem : MonoBehaviour, IPickable
         return transform.position;
     }
 
-    public virtual Sprite GetGrabImage()
+    public Sprite GetGrabImage()
     {
         return grabImage;
     }

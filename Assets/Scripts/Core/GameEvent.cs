@@ -3,6 +3,10 @@
     OnGrabIngridient,
     OnReleaseIngridient,
     ClientDonePurchase,
-    NoMoreCustomers
+    NoMoreCustomers,
+    BuyIngredient,
+    
+    StartNewDay,
+    FinishDay
 }
 

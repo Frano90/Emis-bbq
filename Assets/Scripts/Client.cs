@@ -43,9 +43,13 @@ public class Client : PickableReceiver
 
     public override void OnReceiveIngredient(IPickable pickable)
     {
+        
+        
         if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
         
         if (!(pickable is IEntregable)) return;
+        
+        bool isGood = true;
         
         pickable.MoveTo(this);
         pickable.Delete();
@@ -53,47 +57,29 @@ public class Client : PickableReceiver
         IEntregable entregable = pickable as IEntregable;
         List<IngredientData> auxIngredientList = entregable.GetIngredientsInOrder();
 
-        //Check si tiene la misma cantidad de ingredientes de lo que pidio
-        if (_currentRecipe.ingredients.Length != entregable.GetIngredientsInOrder().Count)
-        {
-            BadOrder(pickable);
-            return;
-        }
-        
         for (int i = 0; i < auxIngredientList.Count; i++)
         {
             if (!_currentRecipe.ingredients[i].Equals(auxIngredientList[i]))
             {
-                BadOrder(pickable);
-                return;
+                isGood = false;
             }
         }
         
-        GoodOrder();
+        CheckOrder(isGood);
         
-    }
-
-    void BadOrder(IPickable pickable)
-    {
-        Debug.Log("MAL PEDIDO");
-        pickable.Delete();
         OnReceiveOrder?.Invoke(false, this);
-        
         Destroy(gameObject);
     }
 
-    void GoodOrder()
+    void CheckOrder(bool isGood)
     {
-        OnReceiveOrder?.Invoke(true, this);
-        
-        Debug.Log("ES MI PEDIDO");
-
-        ComputeScore();
-        Destroy(gameObject);
+        Main.instance.eventManager.TriggerEvent(GameEvent.ClientDonePurchase, elapsedTimeOrdering, isGood);
     }
 
-    private void ComputeScore()
+    public void GoToWindow(Transform windowTransform)
     {
-        //Como hacemos esto?
+        transform.position = windowTransform.position;
+        transform.rotation = windowTransform.rotation;
     }
+
 }

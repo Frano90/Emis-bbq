@@ -30,6 +30,7 @@ public class Ingredient : KitchenItem
         
         grabImage = _ingridientStates[_currentIngridientStateIndex].grabbedImage;
         _ingridientStates[_currentIngridientStateIndex].Enter(modelView);
+        _grabbedItemView.UpdateOriginalMaterial();
     }
 }
 

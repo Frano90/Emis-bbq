@@ -6,6 +6,6 @@ public class Bun : Ingredient, ICortable
 {
     public void Cut()
     {
-     //Estas al pedo en la memis bbq?   
+        //Process(); TODO CAMBIAR A TAGS   
     }
 }

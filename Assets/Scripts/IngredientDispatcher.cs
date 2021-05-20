@@ -8,6 +8,7 @@ public class IngredientDispatcher : MonoBehaviour
 
     [SerializeField] private string ingredientName;
     private Ingredient currentIngredient;
+    [SerializeField] private int costMoney;
     
     private PickableReceiver _currentPickableReceiver;
     
@@ -25,6 +26,8 @@ public class IngredientDispatcher : MonoBehaviour
 
     private void DispatchIngredient()
     {
+        Main.instance.eventManager.TriggerEvent(GameEvent.BuyIngredient, costMoney);
+        
         currentIngredient.OnMoveToAnotherPlace -= DispatchIngredient;
         
         CreateNewIngredient();
