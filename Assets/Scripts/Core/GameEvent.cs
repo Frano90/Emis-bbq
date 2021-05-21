@@ -1,7 +1,7 @@
 ﻿public enum GameEvent
 {
-    OnGrabIngridient,
-    OnReleaseIngridient,
+    OnGrabPickable,
+    OnReleasePickable,
     ClientDonePurchase,
     NoMoreCustomers,
     BuyIngredient,

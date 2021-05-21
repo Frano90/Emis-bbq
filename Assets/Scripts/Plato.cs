@@ -35,6 +35,7 @@ public class Plato : PickableReceiver
         PreparedDish newDish = Resources.Load<PreparedDish>("PreparedDish");
         _currentPreparedDish = Instantiate<PreparedDish>(newDish);
         _currentPreparedDish.MoveTo(this);
+        _currentPreparedDish.SetOriginPosition(PlaceToPutObject.position);
         _currentPreparedDish.OnMoveToAnotherPlace += ClearDish;
     }
 

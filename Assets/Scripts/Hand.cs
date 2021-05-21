@@ -41,21 +41,27 @@ public class Hand : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 1000f))
         {
             _currentPickable = GetPickableFromCollider(hit.collider);
-            
-            if(_currentPickable != null) _currentPickable.PickUp();
+
+            if (_currentPickable != null)
+            {
+                _currentPickable.PickUp();
+                Main.instance.eventManager.TriggerEvent(GameEvent.OnGrabPickable);
+            }
         }
     }
 
     private void ReleasePickable()
     {
         if( _currentPickable != null) _currentPickable.Release();
-        
-        Main.instance.eventManager.TriggerEvent(GameEvent.OnReleaseIngridient);
+
+        Main.instance.eventManager.TriggerEvent(GameEvent.OnReleasePickable);
         
         if (_currentPickableReceiver != null)
         {
             if(_currentPickable.GetCurrentReceiver() != null) _currentPickable.GetCurrentReceiver().RemovePickable();
             _currentPickableReceiver.OnReceiveIngredient(_currentPickable);
+            
+            
         }
 
         _currentPickableReceiver = null;

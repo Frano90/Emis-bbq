@@ -18,7 +18,13 @@ public class PickableReceiver : MonoBehaviour
     [SerializeField]protected IPickable currentKitchenItemHolding;
 
     protected float _count;
-    
+
+    public void Start()
+    {
+        //Esto es un arreglo cabeza de un bug choto que no pude resolver facil
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleasePickable, () => onHoverParticles_FB.Stop());
+    }
+
     public Transform PlaceToPutObject => placeToPutObject;
     public void OnDragObjectHover() {if(!onHoverParticles_FB.isPlaying) onHoverParticles_FB.Play();}
 

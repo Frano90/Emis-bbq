@@ -11,9 +11,7 @@ public class IngredientData : ScriptableObject
     public GameObject viewModel;
     public float processTime;
     private float _count;
-
-    public event Action OnFinishProcessTime; 
-    public event Action<float, float> OnRefreshElapsedProcessTime; 
+    
     
     public void Exit(Transform modelView)
     {

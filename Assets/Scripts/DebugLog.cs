@@ -18,6 +18,7 @@ public class DebugLog : MonoBehaviour
     private void BuyIngridient(object[] parametercontainer)
     {
         log.text = "Gastaste " + parametercontainer[0];
+        StartCoroutine(CleanLog());
     }
 
     private void PurchaseResult(object[] parametercontainer)
@@ -38,7 +39,7 @@ public class DebugLog : MonoBehaviour
 
     IEnumerator CleanLog()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         log.text = "";
     }

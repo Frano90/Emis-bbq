@@ -16,8 +16,20 @@ public class KitchenItem : MonoBehaviour, IPickable
     protected virtual void Start()
     {
         _grabbedItemView = new GrabbedItemView(modelView);
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabPickable, DisableCollider);
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleasePickable, EnableCollider);
     }
 
+    void DisableCollider()
+    {
+        GetComponent<Collider>().enabled = false;
+    }
+    
+    void EnableCollider()
+    {
+        GetComponent<Collider>().enabled = true;
+    }
+    
     public void PickUp()
     {
         _grabbedItemView.EnablePickUpFeedback();
@@ -46,6 +58,10 @@ public class KitchenItem : MonoBehaviour, IPickable
     public void Delete()
     {
         if(_currentReceiver != null) _currentReceiver.RemovePickable();
+        
+        Main.instance.eventManager.UnsubscribeToEvent(GameEvent.OnGrabPickable, DisableCollider);
+        Main.instance.eventManager.UnsubscribeToEvent(GameEvent.OnReleasePickable, EnableCollider);
+        
         Destroy(gameObject);
     }
 
