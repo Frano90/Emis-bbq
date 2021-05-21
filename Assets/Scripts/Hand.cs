@@ -50,6 +50,8 @@ public class Hand : MonoBehaviour
     {
         if( _currentPickable != null) _currentPickable.Release();
         
+        Main.instance.eventManager.TriggerEvent(GameEvent.OnReleaseIngridient);
+        
         if (_currentPickableReceiver != null)
         {
             if(_currentPickable.GetCurrentReceiver() != null) _currentPickable.GetCurrentReceiver().RemovePickable();
@@ -73,11 +75,15 @@ public class Hand : MonoBehaviour
             if (posiblePlace != null)
             {
                 _currentPickableReceiver = posiblePlace;
-                ParabolicShooter.DrawPath(_currentPickable.GetPosition(), _currentPickableReceiver.PlaceToPutObject.position); posiblePlace.OnDragObjectHover();
+                ParabolicShooter.DrawPath(_currentPickable.GetPosition(), _currentPickableReceiver.PlaceToPutObject.position);
+                posiblePlace.OnDragObjectHover();
             }
             else
             {
-                if(_currentPickableReceiver != null) _currentPickableReceiver.OnExitDragObjectHover();
+                if (_currentPickableReceiver != null)
+                {
+                    _currentPickableReceiver.OnExitDragObjectHover();
+                }
                 
                 _currentPickableReceiver = null;
             }    

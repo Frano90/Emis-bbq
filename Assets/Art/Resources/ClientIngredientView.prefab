@@ -88,10 +88,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0.3
-  m_MinHeight: 0.3
-  m_PreferredWidth: 0.6
-  m_PreferredHeight: 0.6
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_MinWidth: 0.4
+  m_MinHeight: 0.4
+  m_PreferredWidth: 0.4
+  m_PreferredHeight: 0.4
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
