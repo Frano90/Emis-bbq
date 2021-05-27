@@ -13,6 +13,7 @@ public class KitchenItem : MonoBehaviour, IPickable
     [SerializeField] protected GrabbedItemView _grabbedItemView;
 
 
+    public bool Grabbed { get; private set; }
     protected virtual void Start()
     {
         _grabbedItemView = new GrabbedItemView(modelView);
@@ -32,11 +33,13 @@ public class KitchenItem : MonoBehaviour, IPickable
     
     public void PickUp()
     {
+        Grabbed = true;
         _grabbedItemView.EnablePickUpFeedback();
     }
 
     public void Release()
     {
+        Grabbed = false;
         _grabbedItemView.DisablePickUpFeedback();
     }
 
@@ -64,6 +67,8 @@ public class KitchenItem : MonoBehaviour, IPickable
         
         Destroy(gameObject);
     }
+
+    bool IPickable.Grabbed(){return Grabbed;}
 
     public Vector3 GetPosition()
     {

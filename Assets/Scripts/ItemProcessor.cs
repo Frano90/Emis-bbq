@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemProcessor : PickableReceiver, IKitchenItemProcessor
 {
-    private void Update()
+    protected virtual void Update()
     {
         if (currentKitchenItemHolding != null)
         {
@@ -16,10 +16,13 @@ public class ItemProcessor : PickableReceiver, IKitchenItemProcessor
         }
         
         uiPanel.SetActive(currentKitchenItemHolding != null);
+        
     }
     
     public void ProcessKitchenItem()
     {
+        if(currentKitchenItemHolding.Grabbed()) return;
+        
         var currentIngridient = currentKitchenItemHolding as Ingredient;
         var data = currentIngridient.CurrentIngredientData;
         

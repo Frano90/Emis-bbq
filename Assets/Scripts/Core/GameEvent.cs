@@ -7,6 +7,6 @@
     BuyIngredient,
     
     StartNewDay,
-    FinishDay
+    FinishDay,
 }
 

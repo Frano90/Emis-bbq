@@ -9,7 +9,7 @@ public class IngredientDispatcher : MonoBehaviour
     [SerializeField] private string ingredientName;
     private Ingredient currentIngredient;
     [SerializeField] private int costMoney;
-    
+
     private PickableReceiver _currentPickableReceiver;
     
     private void Start()

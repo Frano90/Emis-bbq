@@ -58,6 +58,7 @@ public class Hand : MonoBehaviour
         
         if (_currentPickableReceiver != null)
         {
+            
             if(_currentPickable.GetCurrentReceiver() != null) _currentPickable.GetCurrentReceiver().RemovePickable();
             _currentPickableReceiver.OnReceiveIngredient(_currentPickable);
             

@@ -17,3 +17,4 @@ MonoBehaviour:
   viewModel: {fileID: 4087237241097341601, guid: 3fa1b98ba59ab324a9e7329e5f4049ef,
     type: 3}
   processTime: 5
+  cost: 3

@@ -9,26 +9,34 @@ public class PickableReceiver : MonoBehaviour
 {
 
     [SerializeField] protected Image processBar; 
-    [SerializeField] protected GameObject uiPanel; 
-    
-    [SerializeField] protected ParticleSystem onHoverParticles_FB;
-    
+    [SerializeField] protected GameObject uiPanel;
+
     [SerializeField] private Transform placeToPutObject;
 
     [SerializeField]protected IPickable currentKitchenItemHolding;
 
     protected float _count;
 
-    public void Start()
+    private void Start()
     {
-        //Esto es un arreglo cabeza de un bug choto que no pude resolver facil
-        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleasePickable, () => onHoverParticles_FB.Stop());
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnGrabPickable, EnableCollider);
+        Main.instance.eventManager.SubscribeToEvent(GameEvent.OnReleasePickable, DisableCollider);
+    }
+    
+    void DisableCollider()
+    {
+        GetComponent<Collider>().enabled = false;
+    }
+    
+    void EnableCollider()
+    {
+        GetComponent<Collider>().enabled = true;
     }
 
     public Transform PlaceToPutObject => placeToPutObject;
-    public void OnDragObjectHover() {if(!onHoverParticles_FB.isPlaying) onHoverParticles_FB.Play();}
+    public void OnDragObjectHover() {}
 
-    public void OnExitDragObjectHover(){ onHoverParticles_FB.Stop();}
+    public void OnExitDragObjectHover(){}
     
     public virtual void OnReceiveIngredient(IPickable pickable){}
 
@@ -36,5 +44,13 @@ public class PickableReceiver : MonoBehaviour
     {
         _count = 0;
         currentKitchenItemHolding = null;
+    }
+
+    public void Delete()
+    {
+        Main.instance.eventManager.UnsubscribeToEvent(GameEvent.OnGrabPickable, EnableCollider);
+        Main.instance.eventManager.UnsubscribeToEvent(GameEvent.OnReleasePickable, DisableCollider);
+        
+        Destroy(gameObject);
     }
 }

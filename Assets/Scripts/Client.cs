@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,29 +13,58 @@ public class Client : PickableReceiver
     [SerializeField] OrderView orderView;
 
     private float elapsedTimeOrdering = 0;
-    [SerializeField]private float totalOrderTime;
+    [SerializeField] private float totalOrderTime;
 
-    public int MyWindow { get; set; }
-    public event Action<bool, Client> OnReceiveOrder;
+    [SerializeField] private Animator _anim;
+
+    private bool makeMyOrder = false;
+    public event Action OnFinishRecieveOrderFeedback;
 
     public void Init()
     {
-        Order();
+        StartCoroutine(ClientIntro());
 
         elapsedTimeOrdering = totalOrderTime;
     }
 
+    IEnumerator ClientIntro()
+    {
+        float count = 0;
+        float introTime = 2;
+        _anim.Play("Ask");
+        while (count <= introTime)
+        {
+            count += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        
+        Order();
+    }
     private void Update()
     {
-        if(elapsedTimeOrdering < 0) return;
-        
+        OrderViewUpdate();
+    }
+
+    private void OrderViewUpdate()
+    {
+        if (orderView == null) return;
+
+        if (!makeMyOrder) return;
+
+        if (elapsedTimeOrdering < 0)
+        {
+            CheckOrder(false);
+            return;
+        }
+
         elapsedTimeOrdering -= Time.deltaTime;
-        
+
         orderView.RefreshClockView(elapsedTimeOrdering, totalOrderTime);
     }
 
     public void Order()
     {
+        makeMyOrder = true;
         int rgn = Random.Range(0, recipes.Length);
         _currentRecipe = recipes[rgn];
         
@@ -43,10 +73,6 @@ public class Client : PickableReceiver
 
     public override void OnReceiveIngredient(IPickable pickable)
     {
-        
-        
-        if(onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
-        
         if (!(pickable is IEntregable)) return;
         
         bool isGood = true;
@@ -57,29 +83,77 @@ public class Client : PickableReceiver
         IEntregable entregable = pickable as IEntregable;
         List<IngredientData> auxIngredientList = entregable.GetIngredientsInOrder();
 
-        for (int i = 0; i < auxIngredientList.Count; i++)
-        {
-            if (!_currentRecipe.ingredients[i].Equals(auxIngredientList[i]))
-            {
-                isGood = false;
-            }
-        }
-        
+        if (!auxIngredientList.SequenceEqual(_currentRecipe.ingredients))
+            isGood = false;
+
         CheckOrder(isGood);
-        
-        OnReceiveOrder?.Invoke(false, this);
-        Destroy(gameObject);
     }
 
     void CheckOrder(bool isGood)
     {
-        Main.instance.eventManager.TriggerEvent(GameEvent.ClientDonePurchase, elapsedTimeOrdering, isGood);
+        Destroy(orderView.gameObject);
+        OrderStatus orderStatus = OrderStatus.Good;
+        
+        if (isGood)
+        {
+            _anim.Play("GoodOrder");
+        }
+        else
+        {
+            _anim.Play("BadOrder");
+        }
+
+        
+        float percent = elapsedTimeOrdering / totalOrderTime;
+        Debug.Log(isGood + " " + percent);
+        if (percent <= 0 || !isGood)    //Sacar a un metodo que calcule order status asi es mas legible
+        {
+            orderStatus = OrderStatus.Unacceptable;
+        }
+        else if (percent < .3f)
+        {
+            orderStatus = OrderStatus.Bad;
+        }
+        else if(percent <= .6f)
+        {
+            orderStatus = OrderStatus.Regular;
+        }else if (percent <= 1f)
+        {
+            orderStatus = OrderStatus.Good;
+        }
+        
+        StartCoroutine(ReciveOrder());
+        
+        
+        Main.instance.eventManager.TriggerEvent(GameEvent.ClientDonePurchase, orderStatus, _currentRecipe);
+    }
+
+    IEnumerator ReciveOrder()
+    {
+        float count = 0;
+        while (count <= 5f)
+        {
+            count += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        OnFinishRecieveOrderFeedback?.Invoke();
+        Delete();
     }
 
     public void GoToWindow(Transform windowTransform)
     {
         transform.position = windowTransform.position;
         transform.rotation = windowTransform.rotation;
+    }
+
+    public enum OrderStatus
+    {
+        Undefined,
+        Unacceptable,
+        Bad,
+        Regular,
+        Good
     }
 
 }

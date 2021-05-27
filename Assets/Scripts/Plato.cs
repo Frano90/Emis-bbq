@@ -10,9 +10,6 @@ public class Plato : PickableReceiver
     [SerializeField] private OrderView orderViewUI;
     public override void OnReceiveIngredient(IPickable pickable)
     {
-
-        if (onHoverParticles_FB.isPlaying) onHoverParticles_FB.Stop();
-        
         if (!(pickable is Ingredient)) return;
 
         Ingredient ingredient =  pickable as Ingredient;

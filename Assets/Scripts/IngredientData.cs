@@ -10,6 +10,7 @@ public class IngredientData : ScriptableObject
     public Material grabbedMaterial;
     public GameObject viewModel;
     public float processTime;
+    public int cost;
     private float _count;
     
     

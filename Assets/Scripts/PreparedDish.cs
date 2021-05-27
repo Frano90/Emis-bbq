@@ -25,27 +25,24 @@ public class PreparedDish : KitchenItem, IEntregable
 
         ingredientsInDish.Add(newIngredientSpawned);
 
+        _currentRecipe.Add(iData);
+        
         if (_currentRecipe.Count == 0)
         {
             newIngredientSpawned.transform.position = stackOriginPoint;
+            
+            return;
         }
-        else
-        {
-            Vector3 originPoint = transform.position + Vector3.up;
 
-            Ray ray = new Ray(originPoint, Vector3.down);
+        Vector3 originPoint = transform.position + Vector3.up;
 
-            RaycastHit hit;
-        
-            Physics.Raycast(ray, out hit, 100f, raycastMask);
+        Ray ray = new Ray(originPoint, Vector3.down);
 
-            Debug.Log(hit.collider.gameObject.name);
-        
-            newIngredientSpawned.transform.position = hit.point;    
-        }
-        
-        _currentRecipe.Add(iData);
+        RaycastHit hit;
+    
+        Physics.Raycast(ray, out hit, 100f, raycastMask);
 
+        newIngredientSpawned.transform.position = hit.point;
     }
 
     public List<IngredientData> GetIngredientsInOrder() => _currentRecipe;

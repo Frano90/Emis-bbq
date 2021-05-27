@@ -23,15 +23,15 @@ public class DebugLog : MonoBehaviour
 
     private void PurchaseResult(object[] parametercontainer)
     {
-        bool result = (bool)parametercontainer[1];
+        Client.OrderStatus result = (Client.OrderStatus)parametercontainer[0];
 
-        if (result)
+        if (result == Client.OrderStatus.Unacceptable)
         {
-            log.text = "PEDIDO CORRECTO";
+            log.text = "PEDIDO INCORRECTO";
         }
         else
         {
-            log.text = "PEDIDO INCORRECTO";
+            log.text = "PEDIDO CORRECTO";
         }
 
         StartCoroutine(CleanLog());
